@@ -1,11 +1,10 @@
-DepenizenBungee
+denizen-velocity
 ---------------
 
-**Depenizen-Bungee: A plugin for Bungee proxy servers to relay messages sent through the Bukkit plugin, Depenizen**
+**denizen-velocity: A plugin for Velocity proxy servers to relay messages sent through the Bukkit plugin, Depenizen**
 
 - **Depenizen**: https://github.com/DenizenScript/Depenizen
-- **Support Discord**: https://discord.gg/Q6pZGSR
-- **Builds (Download)**: https://ci.citizensnpcs.co/job/DepenizenBungee/
+- **Support Discord**: https://discord.gg/SVwEmsvpjN
 
 ### Licensing pre-note:
 
