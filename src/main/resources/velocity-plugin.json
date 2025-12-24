@@ -1,0 +1,11 @@
+{
+  "id": "denizen-velocity",
+  "name": "denizen-velocity",
+  "version": "1.0",
+  "description": "Denizen-Velocity bridge for Velocity",
+  "authors": [
+    "isnsest"
+  ],
+  "dependencies": [],
+  "main": "com.isnsest.denizen.velocity.DenizenVelocity"
+}

@@ -1,4 +1,0 @@
-name: DepenizenBungee
-main: com.denizenscript.depenizen.bungee.DepenizenBungee
-version: ${project.version} (build ${BUILD_NUMBER})
-author: The DenizenScript Team
