@@ -1,7 +1,6 @@
 denizen-velocity
 ---------------
 [![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/plugin/denizen-velocity)
-[![](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/spigot_vector.svg)](https://www.spigotmc.org/resources/denizen-velocity.131077/)
 
 **denizen-velocity: A plugin for Velocity proxy servers to relay messages sent through the Bukkit plugin, Depenizen**
 
