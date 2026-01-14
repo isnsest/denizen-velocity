@@ -37,6 +37,7 @@ public class DenizenVelocity {
     public static DenizenVelocity instance;
     public final ProxyServer server;
     public final Logger logger;
+    public static Metrics.Factory metricsFactory;
     public static YamlConfig config;
 
     private static int DEPENIZEN_PORT = 0;
@@ -51,9 +52,13 @@ public class DenizenVelocity {
     private EventLoopGroup workerGroup;
 
     @Inject
-    public DenizenVelocity(ProxyServer server, Logger logger, @DataDirectory Path dataDir) {
+    public DenizenVelocity(ProxyServer server,
+                           Logger logger,
+                           @DataDirectory Path dataDir,
+                           Metrics.Factory metricsFactory) {
         this.server = server;
         this.logger = logger;
+        this.metricsFactory = metricsFactory;
         instance = this;
         config = new YamlConfig(dataDir);
         DEPENIZEN_PORT = config.getPort();
@@ -99,6 +104,7 @@ public class DenizenVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         logger.info("Loading...");
+        Metrics metrics = metricsFactory.make(this, 28531);
         registerPackets();
         startServer();
 
