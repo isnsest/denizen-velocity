@@ -31,7 +31,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "denizen-velocity", name = "denizen-velocity", version = "1.0", authors = {"isnsest"})
+@Plugin(id = "denizen-velocity", name = "denizen-velocity", version = "1.1", authors = {"isnsest"})
 public class DenizenVelocity {
 
     public static DenizenVelocity instance;
