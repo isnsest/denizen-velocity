@@ -1,7 +1,7 @@
 package com.isnsest.denizen.velocity;
 
-import com.isnsest.denizen.velocity.packets.out.AddServerPacketOut;
-import com.isnsest.denizen.velocity.packets.out.RemoveServerPacketOut;
+import com.isnsest.denizen.velocity.packets.in.*;
+import com.isnsest.denizen.velocity.packets.out.*;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerPing;
@@ -83,13 +83,17 @@ public class DenizenConnection extends ChannelInboundHandlerAdapter {
 
     public void broadcastIdentity() {
         DenizenVelocity.instance.server.getScheduler().buildTask(DenizenVelocity.instance, () -> {
-            if (thisServer != null) DenizenVelocity.instance.broadcastPacket(new AddServerPacketOut(thisServer.getServerInfo().getName()));
+            if (thisServer != null) {
+                DenizenVelocity.instance.broadcastPacket(new AddServerPacketOut(thisServer.getServerInfo().getName()));
+            }
         }).schedule();
     }
 
     public void broadcastRemoval() {
         DenizenVelocity.instance.server.getScheduler().buildTask(DenizenVelocity.instance, () -> {
-            if (thisServer != null) DenizenVelocity.instance.broadcastPacket(new RemoveServerPacketOut(thisServer.getServerInfo().getName()));
+            if (thisServer != null) {
+                DenizenVelocity.instance.broadcastPacket(new RemoveServerPacketOut(thisServer.getServerInfo().getName()));
+            }
         }).schedule();
     }
 
@@ -136,7 +140,6 @@ public class DenizenConnection extends ChannelInboundHandlerAdapter {
                     if (DenizenVelocity.instance.packets.containsKey(id)) {
                         packetBuffer.resetReaderIndex();
                         handshakeFound = true;
-                        DenizenVelocity.instance.logger.info("Connected server: " + connectionName);
                         break;
                     } else {
                         packetBuffer.resetReaderIndex();

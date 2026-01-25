@@ -3,6 +3,7 @@ package com.isnsest.denizen.velocity.packets.in;
 import com.isnsest.denizen.velocity.DenizenConnection;
 import com.isnsest.denizen.velocity.DenizenVelocity;
 import com.isnsest.denizen.velocity.PacketIn;
+import com.isnsest.denizen.velocity.packets.out.AddServerPacketOut;
 import com.isnsest.denizen.velocity.packets.out.YourInfoPacketOut;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import io.netty.buffer.ByteBuf;
@@ -38,7 +39,22 @@ public class MyInfoPacketIn extends PacketIn {
             return;
         }
 
-        connection.sendPacket(new YourInfoPacketOut(connection.thisServer.getServerInfo().getName()));
+        String serverName = connection.thisServer.getServerInfo().getName();
+
+        DenizenConnection existing = DenizenVelocity.instance.getConnectionByName(serverName);
+        if (existing != null && existing != connection) {
+            existing.fail("Replaced by new connection");
+        }
+
+        connection.sendPacket(new YourInfoPacketOut(serverName));
+
+        for (DenizenConnection conn : DenizenVelocity.instance.getConnections()) {
+            if (conn != connection && conn.thisServer != null) {
+                connection.sendPacket(new AddServerPacketOut(conn.thisServer.getServerInfo().getName()));
+            }
+        }
+
         connection.broadcastIdentity();
+        DenizenVelocity.instance.logger.info("Connected server: " + connection.connectionName + " as: " + serverName);
     }
 }

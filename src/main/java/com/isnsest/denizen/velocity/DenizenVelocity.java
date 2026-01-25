@@ -13,7 +13,6 @@ import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -31,7 +30,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "denizen-velocity", name = "denizen-velocity", version = "1.1", authors = {"isnsest"})
+@Plugin(id = "denizen-velocity", name = "denizen-velocity", version = "1.2", authors = {"isnsest"})
 public class DenizenVelocity {
 
     public static DenizenVelocity instance;
@@ -41,8 +40,6 @@ public class DenizenVelocity {
     public static YamlConfig config;
 
     private static int DEPENIZEN_PORT = 0;
-    // public static boolean proxyCommandNoDup = false;
-    // public static long proxyCommandId = 1;
 
     public HashMap<Integer, PacketIn> packets = new HashMap<>();
     private final List<DenizenConnection> connections = new ArrayList<>();
@@ -140,32 +137,8 @@ public class DenizenVelocity {
                             @Override
                             public void initChannel(SocketChannel ch) {
                                 InetSocketAddress remoteAddress = ch.remoteAddress();
-                                String remoteIp = remoteAddress.getAddress().getHostAddress();
-
-                                RegisteredServer matchedServer = null;
-                                for (RegisteredServer rs : server.getAllServers()) {
-                                    String serverIp = rs.getServerInfo().getAddress().getAddress().getHostAddress();
-                                    if (serverIp.equals(remoteIp)) {
-                                        matchedServer = rs;
-                                        break;
-                                    }
-                                    if ((remoteIp.equals("127.0.0.1") || remoteIp.equals("0:0:0:0:0:0:0:1"))
-                                            && (rs.getServerInfo().getAddress().getAddress().isLoopbackAddress())) {
-                                        matchedServer = rs;
-                                        break;
-                                    }
-                                }
-
-                                if (matchedServer == null) {
-                                    logger.warn("BLOCKED connection from " + remoteIp);
-                                    ch.close();
-                                    return;
-                                }
-
-                                logger.info("Accepted connection from " + remoteIp + " as server: " + matchedServer.getServerInfo().getName());
 
                                 DenizenConnection depenConnection = new DenizenConnection();
-                                depenConnection.thisServer = matchedServer;
                                 depenConnection.build(ch, remoteAddress.getAddress());
                             }
                         });
@@ -241,7 +214,6 @@ public class DenizenVelocity {
                     finalPing.version(finalVersion);
 
                     event.setPing(finalPing.build());
-
                 } catch (Exception e) {
                     connection.proxyPingWaiters.remove(id);
                 }
@@ -253,7 +225,9 @@ public class DenizenVelocity {
 
     public void broadcastPacket(PacketOut packet) {
         for (DenizenConnection connection : getConnections()) {
-            connection.sendPacket(packet);
+            if (connection.thisServer != null) {
+                connection.sendPacket(packet);
+            }
         }
     }
 }
