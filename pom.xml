@@ -6,7 +6,7 @@
     <groupId>com.isnsest</groupId>
     <artifactId>denizen-velocity</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>1.2</version>
     <name>denizen-velocity</name>
     <url>https://github.com/isnsest/denizen-velocity</url>
 

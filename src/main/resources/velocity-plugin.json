@@ -1,7 +1,7 @@
 {
   "id": "denizen-velocity",
   "name": "denizen-velocity",
-  "version": "1.1",
+  "version": "1.2",
   "description": "Denizen-Velocity bridge for Velocity",
   "authors": [
     "isnsest"
